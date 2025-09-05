@@ -1,6 +1,7 @@
 const express = require('express')
 const mongoose = require('mongoose')
 const dotenv = require('dotenv')
+const userRouter = require('./routes/userRoutes')
 
 //load environment variables
 dotenv.config()
@@ -17,6 +18,13 @@ mongoose
   .catch(err => {
     console.log('Error connecting to database', err.message)
   })
+
+  //pass incoming data 
+  app.use(express.json())
+
+  //routes
+  app.use('/api/users', userRouter)
+
 
 //start the server
 const PORT = process.env.PORT || 5000

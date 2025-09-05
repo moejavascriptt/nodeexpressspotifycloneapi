@@ -4,6 +4,7 @@ const User = require('../models/User')
 
 //@desc - register a new user
 //@route - POST /api/users/register
+//@access - public
 
 const registerUser = asyncHandler(async (req, res) => {
   // get the payload
@@ -35,5 +36,5 @@ const registerUser = asyncHandler(async (req, res) => {
 })
 
 module.exports = {
-    registerUser, 
+  registerUser
 }
