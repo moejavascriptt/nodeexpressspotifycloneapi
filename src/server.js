@@ -1,6 +1,6 @@
 const express = require('express')
 const mongoose = require('mongoose')
-const {} = require('http-status-codes')
+const { StatusCodes } = require('http-status-codes')
 const dotenv = require('dotenv')
 const userRouter = require('./routes/userRoutes')
 
@@ -30,11 +30,11 @@ app.use('/api/users', userRouter)
 //404
 app.use((req, res, next) => {
   const error = new Error('Not Found')
-  error.status = StatusCoes.NOT_FOUND
+  error.status = StatusCodes.NOT_FOUND
   next(error)
 })
 //global error handler
-app.user((err, req, res, next) => {
+app.use((err, req, res, next) => {
   res.status(err.status || StatusCodes.INTERNAL_SERVER_ERROR).json({
     message: err.message || 'Internal server Error',
     status: 'error'
