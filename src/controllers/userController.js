@@ -1,5 +1,5 @@
 const asyncHandler = require('express-async-handler')
-const { statusCodes } = rquire('http-status-codes')
+const { StatusCodes } = require('http-status-codes')
 const User = require('../models/User')
 
 //@desc - register a new user
@@ -12,7 +12,7 @@ const registerUser = asyncHandler(async (req, res) => {
   // check if user already exists
   const userExists = await User.findOne({ email })
   if (userExists) {
-    res.status(statusCodes.BAD_REQUEST)
+    res.status(StatusCodes.BAD_REQUEST)
     throw new Error('User already exists')
   }
 
@@ -23,7 +23,7 @@ const registerUser = asyncHandler(async (req, res) => {
     password
   })
   if (user) {
-    res.status(statusCodes.CREATED).json({
+    res.status(StatusCodes.CREATED).json({
       _id: user._id,
       name: user.name,
       email: user.email,
@@ -31,7 +31,7 @@ const registerUser = asyncHandler(async (req, res) => {
       profilePicture: user.profilePicture
     })
   } else {
-    res.status(statusCodes.BAD_REQUEST)
+    res.status(StatusCodes.BAD_REQUEST)
   }
 })
 
