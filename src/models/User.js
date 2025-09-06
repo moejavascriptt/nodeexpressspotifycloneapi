@@ -60,6 +60,13 @@ const userSchema = new mongoose.Schema(
     timestamps: true
   }
 )
+
+
+// method to compare password with hashed password 
+userSchema.methods.matchPassword = async function(enteredPassword){
+  return await bcrypt.compare(enteredPassword, this.password)
+}
+
 //Hash password before saving
 userSchema.pre('save', async function (next) {
   //only hash the passord if its modified

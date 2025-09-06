@@ -35,6 +35,26 @@ const registerUser = asyncHandler(async (req, res) => {
   }
 })
 
+const loginUser = asyncHandler(async (req, res) => {
+  const { email, password } = req.body
+  //find the user
+  const user = await User.findOne({ email })
+  //check if user exists and password matches
+  if (user && (await user.matchPassword(password))) {
+    res.status(StatusCodes.OK).json({
+      _id: user._id,
+      email: user.email,
+      isAdmin: user.isAdmin,
+      profilePicture: user.profilePicture,
+      token: 'token here'
+    })
+  } else {
+    res.status(StatusCodes.UNAUTHORIZED)
+    throw new Error('Invalid email or password')
+  }
+})
+
 module.exports = {
-  registerUser
+  registerUser,
+  loginUser
 }
