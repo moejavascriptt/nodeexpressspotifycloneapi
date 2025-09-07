@@ -55,7 +55,26 @@ const loginUser = asyncHandler(async (req, res) => {
   }
 })
 
+//get user profile
+const getUserProfile = asyncHandler(async (req, res) => {
+  //find the user
+  console.log('Profile ctrl', req.user)
+  
+  //  console.log('Profile ctlr')
+})
+//updateUserProfie
+const updateUserProfile = asyncHandler(async (req, res) => {})
+//toggleLikeSong
+const toggleLikeSong = asyncHandler(async (req, res) => {})
+//toggleFollowArtist
+const toggleFollowArtist = asyncHandler(async (req, res) => {})
+//toggleFollowPlaylist
+const toggleFollowPlaylist = asyncHandler(async (req, res) => {})
+//getUsers
+const getUsers = asyncHandler(async (req, res) => {})
+
 module.exports = {
   registerUser,
-  loginUser
+  loginUser,
+  getUserProfile
 }
