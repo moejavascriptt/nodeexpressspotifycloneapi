@@ -76,7 +76,35 @@ const getUserProfile = asyncHandler(async (req, res) => {
   //  console.log('Profile ctlr')
 })
 //updateUserProfie
-const updateUserProfile = asyncHandler(async (req, res) => {})
+const updateUserProfile = asyncHandler(async (req, res) => {
+  const user = await User.findById(req.user_id)
+  const { name, email, password } = req.body
+  if (user) {
+    user.name = name || user.name
+    user.email = name || user.email
+  }
+  // check if password is being updated
+  if (password) {
+    user.password = password
+  }
+
+  // upload profile picture if provided
+  if (req.file) {
+    const result = await uploadToCloudinary(req.file.path, 'spotify/users')
+    user.profilePicture = result.secure_url
+    const updatedUser = await user()
+    res.status(StatusCodes.OK).json({
+      _id: updatedUser._id,
+      name: updatedUser.name,
+      email: updatedUser.email,
+      profilePicture: updatedUser.profilePicture,
+      isAdmin: updatedUser.isAdmin
+    })
+  } else {
+    res.status(StatusCodes.NOT_FOUND)
+    throw new Error('User Not Found')
+  }
+})
 //toggleLikeSong
 const toggleLikeSong = asyncHandler(async (req, res) => {})
 //toggleFollowArtist
@@ -89,5 +117,6 @@ const getUsers = asyncHandler(async (req, res) => {})
 module.exports = {
   registerUser,
   loginUser,
-  getUserProfile
+  getUserProfile,
+  updateUserProfile
 }
