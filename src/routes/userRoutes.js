@@ -6,6 +6,7 @@ const {
   updateUserProfile
 } = require('../controllers/userController')
 const { protect } = require('../middlewares/auth')
+const upload = require('../middlewares/upload')
 const userRouter = express.Router()
 
 // public routes
@@ -14,6 +15,11 @@ userRouter.post('/login', loginUser)
 
 // private routes
 userRouter.get('/profile', protect, getUserProfile)
-userRouter.put('/profile', protect, updateUserProfile)
+userRouter.put(
+  '/profile',
+  protect,
+  upload.single('profilePicture'),
+  updateUserProfile
+)
 
 module.exports = userRouter
